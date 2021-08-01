@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title th:text="#{msg.titleListJobsTab}"></title>
+	<style type="text/css">
+	#todocontainer {
+		margin-top: 50px;
+	}
+	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="../static/css/styles.css" type="text/css" rel="stylesheet" th:href="@{/css/styles.css}" media="screen,projection">
+</head>
+
+<body>
+	<div th:insert="components :: header"></div>
+
+	<section id="todocontainer">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<table class="table">
+					<thead>
+						<tr>
+							<th th:text="#{msgs.headers.jobs}"></th>
+							<th th:text="#{msgs.headers.frequence}"></th>
+							<th colspan="2"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="job : ${allJobs}">
+							<td th:text="${job.jobName}"></td>
+							<td th:text="${job.cronExpression}"></td>
+							<td>
+								<button th:onclick="'javascript:iniciarJob(' + ${job.id} + ')'" class="btn btn-success" th:text="#{bttn.executeJob}"></button>
+								<button type="button" class="btn btn-success btn-edit" th:data-id="${job.id}" th:data-name="${job.jobName}" th:data-cronExpression="${job.cronExpression}" th:text="#{bttn.edit}"></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="d-flex justify-content-center">
+					<a th:href="@{/schedulerJobInfo/export/excel}" class="btn btn-primary" th:text="#{bttn.export}"></a>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</section>
+
+	<!-- Modal -->
+	<div class="modal fade" id="editModalTemplate" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-title" th:text="#{msg.title.modal.editJob}"></h5>
+				</div>
+				<div class="modal-body">
+					<form action="#"  method="POST" th:action="@{/schedulerJobInfo/editJob}" th:object="${schedulerJobInfo}">
+						<input type="hidden" th:id="id" th:name="id" />
+						<input type="hidden" th:id="jobName" th:name="jobName" />
+						
+						<div class="form-group">
+							<label for="cronExpression" th:text="#{field.cronExp}"></label> 
+							<input type="text" class="form-control" th:id="cronExpression" th:name="cronExpression" />
+						</div>
+						<button type="submit" class="btn btn-success" th:text="#{bttn.accept}"></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:insert="components :: footer"></div>
+
+	<script type="text/javascript" src="../static/js/schedulerjobs.js" th:src="@{/js/schedulerjobs.js}"></script>
+	
+</body>
+</html>

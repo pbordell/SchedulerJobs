@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title th:text="#{msg.titleIndexTab}"></title>
+		<style type="text/css">
+			#todocontainer {
+				margin-top: 50px;
+			}
+		</style>
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	</head>
+	
+	<body>
+		<div th:insert="components :: header"></div>
+		
+		<section id="todocontainer" class="text-center" >
+			<img src="../static/img/iconSpringTymeleaf.png" th:src="@{/img/iconSpringTymeleaf.png}"/>
+			<h2 style="padding-top: 30px; padding-bottom: 20px;" class="text-center" th:text="#{msg.title}"></h2>
+			<div class="d-flex justify-content-center">
+				<a th:href="@{/schedulerJobInfo/getAllJobs}" th:text="#{bttn.jobList}"></a>  
+			</div>
+	
+		</section>
+		
+		<div th:insert="components :: footer"></div>
+		
+	</body>
+</html>
